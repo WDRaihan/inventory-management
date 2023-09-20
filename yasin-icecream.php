@@ -10,6 +10,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+require_once "inc/dashboard-widgets.php";
+
 // Register product
 function custom_product_post_type() {
 
@@ -120,7 +122,7 @@ function custom_icecream_meta_box_callback($post) {
 	wp_nonce_field( 'icecream_meta_box_nonce', 'icecream_meta_box_nonce' );
 }
 
-// Save selected product IDs
+// Save icecream
 function custom_save_selected_products($post_id) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 	
@@ -140,6 +142,59 @@ function custom_save_selected_products($post_id) {
 }
 add_action('save_post', 'custom_save_selected_products');
 
+// Add icecream column
+function icecream_post_type_columns($columns) {
+    $columns['icecream_stock'] = 'Stock'; 
+    $columns['icecream_price'] = 'Price'; 
+    
+    return $columns;
+}
+add_filter('manage_edit-icecreams_columns', 'icecream_post_type_columns');
+
+// Add data to the custom column
+function icecream_post_type_column_data($column, $post_id) {
+    if ($column === 'icecream_stock') {
+        
+        echo get_post_meta($post_id, 'product_stock', true); 
+    }
+	if ($column === 'icecream_price') {
+        
+        echo get_post_meta($post_id, 'icecream_price', true); 
+    }
+}
+add_action('manage_icecreams_posts_custom_column', 'icecream_post_type_column_data', 10, 2);
+
+
+// Add sale column
+function sale_post_type_columns($columns) {
+    $columns['client_info'] = 'Client'; 
+    $columns['order_status'] = 'Status'; 
+    $columns['payment_info'] = 'Payment Info'; 
+    
+    return $columns;
+}
+add_filter('manage_edit-sale_columns', 'sale_post_type_columns');
+
+// Add data to the custom column
+function sale_post_type_column_data($column, $post_id) {
+    if ($column === 'client_info') {
+        
+        echo 'Name: '.get_post_meta($post_id, 'client_name', true).'<br>'; 
+        echo 'Number: '.get_post_meta($post_id, 'client_number', true).'<br>'; 
+        echo 'Address: '.get_post_meta($post_id, 'client_address', true); 
+    }
+	if ($column === 'order_status') {
+        
+        echo get_post_meta($post_id, 'order_status', true); 
+    }
+	if ($column === 'payment_info') {
+        
+        echo 'Subtotal: '.get_post_meta($post_id, 'subtotal_price', true).'<br>'; 
+        echo 'Cash: '.get_post_meta($post_id, 'cash_received', true).'<br>'; 
+        echo 'Due: '.get_post_meta($post_id, 'due_amount', true); 
+    }
+}
+add_action('manage_sale_posts_custom_column', 'sale_post_type_column_data', 10, 2);
 
 
 add_action('admin_init', 'gpm_add_meta_boxes', 2);
@@ -557,6 +612,10 @@ function custom_repeatable_meta_box_save($post_id) {
 	
 	//Update order status
 	update_post_meta( $post_id, 'order_status', $_POST['order_status'] );
+	//Update client info
+	update_post_meta( $post_id, 'client_name', $_POST['client_name'] );
+	update_post_meta( $post_id, 'client_number', $_POST['client_number'] );
+	update_post_meta( $post_id, 'client_address', $_POST['client_address'] );
 	
 	$_order_status = get_post_meta($post_id, '_order_status', true);
 	
