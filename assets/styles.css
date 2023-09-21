@@ -24,3 +24,6 @@ li#menu-tools {
 li#menu-comments {
     display: none !important;
 }
+li#menu-plugins {
+    display: none !important;
+}
