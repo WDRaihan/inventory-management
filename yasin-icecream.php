@@ -103,6 +103,25 @@ function invoice_html($post_id){
     $gpminvoice_group = get_post_meta($post_id, 'customdata_group', true);
 	ob_start();
 ?>
+<table width="100%" style="text-align: left;margin:0 auto">
+	<tbody>
+		<tr>
+			<th style="text-align: right;">Client Name: </th>
+			<th><?php echo get_post_meta( $post_id, 'client_name', true ); ?></th>
+		</tr>
+		<tr>
+			<th style="text-align: right;">Client Number: </th>
+			<th><?php echo get_post_meta( $post_id, 'client_number', true ); ?></th>
+		</tr>
+		<tr>
+			<th style="text-align: right;">Client Address: </th>
+			<th><?php echo get_post_meta( $post_id, 'client_address', true ); ?></th>
+		</tr>
+	</tbody>
+</table>
+<br>
+<hr>
+<br>
 <table width="100%" border="1" style="text-align: center">
 	<tbody>
 		<tr>
@@ -141,6 +160,63 @@ function invoice_html($post_id){
     }
 	endif;
 	?>
+	
+	<tr>
+		<td>
+
+		</td>
+		<td>
+
+		</td>
+		<td>
+
+		</td>
+		<td>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+		</td>
+		<td>
+
+		</td>
+		<td style="text-align: right;">
+			Sub Total:
+		</td>
+		<td>
+			<?php echo get_post_meta( $post_id, 'subtotal_price', true ); ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+		</td>
+		<td>
+
+		</td>
+		<td style="text-align: right;">
+			Cash:
+		</td>
+		<td>
+			<?php echo get_post_meta( $post_id, 'cash_received', true ); ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+		</td>
+		<td>
+
+		</td>
+		<td style="text-align: right;">
+			Due:
+		</td>
+		<td>
+			<?php echo get_post_meta( $post_id, 'due_amount', true ); ?>
+		</td>
+	</tr>
 	</tbody>
 </table>
 <?php
