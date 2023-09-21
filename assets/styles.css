@@ -1,3 +1,26 @@
 #edit-slug-box {
 	display: none !important
 }
+li#menu-pages {
+    display: none !important;
+}
+
+li#menu-appearance {
+    display: none !important;
+}
+
+li#menu-posts {
+    display: none !important;
+}
+
+li#menu-media {
+    display: none !important;
+}
+
+li#menu-tools {
+    display: none !important;
+}
+
+li#menu-comments {
+    display: none !important;
+}

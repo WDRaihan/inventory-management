@@ -80,3 +80,31 @@ function custom_product_post_type() {
 
 }
 add_action( 'init', 'custom_product_post_type', 0 );
+
+function custom_product_taxonomy() {
+    $labels = array(
+        'name' => 'Categories',
+        'singular_name' => 'Category',
+        'search_items' => 'Search Categories',
+        'all_items' => 'All Categories',
+        'parent_item' => 'Parent Category',
+        'parent_item_colon' => 'Parent Category:',
+        'edit_item' => 'Edit Category',
+        'update_item' => 'Update Category',
+        'add_new_item' => 'Add New Category',
+        'new_item_name' => 'New Category Name',
+        'menu_name' => 'Categories',
+    );
+
+    $args = array(
+        'hierarchical' => true,  // Set to true for categories, false for tags
+        'labels' => $labels,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'product-category'), // Customize the slug as needed
+    );
+
+    register_taxonomy('icecream_category', 'icecreams', $args);
+}
+add_action('init', 'custom_product_taxonomy');

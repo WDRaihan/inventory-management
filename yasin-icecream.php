@@ -22,6 +22,12 @@ require_once('inc/pages.php');
 require_once('inc/fields.php');
 require_once('inc/save-fields.php');
 
+function custom_unregister_post_types() {
+    unregister_post_type('page');
+    unregister_post_type('post');
+}
+add_action('init', 'custom_unregister_post_types');
+
 //Invoice
 add_action('wp_ajax_nopriv_generate_pdf', 'generate_invoice_pdf');
 add_action('wp_ajax_generate_pdf', 'generate_invoice_pdf');
